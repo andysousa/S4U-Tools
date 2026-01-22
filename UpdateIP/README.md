@@ -35,9 +35,19 @@ This will prompt you for your email and password, then automatically:
 - Get your session cookie
 - Unlock the IP address
 
-You can also provide email as an argument:
+You can also provide email and password as command-line arguments:
+```bash
+python unlock_ip.py 192.168.1.1 --login --email user@example.com --password yourpassword
+```
+
+Or provide just the email (password will be prompted):
 ```bash
 python unlock_ip.py 192.168.1.1 --login --email user@example.com
+```
+
+You can also automatically detect and use your external IP address:
+```bash
+python unlock_ip.py --auto-ip --login --email user@example.com --password yourpassword
 ```
 
 ### Method 2: Use Existing Session Cookie
