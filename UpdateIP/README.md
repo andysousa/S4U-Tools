@@ -1,6 +1,6 @@
 # Unlock IP Automation
 
-A Python script to automate unlocking IP addresses on Seasons4U.
+A Python script to automate unlocking IP addresses on s4u.
 
 ## License
 
@@ -16,6 +16,60 @@ Or install manually:
 ```bash
 pip install requests beautifulsoup4
 ```
+
+## Configuration
+
+### Base URL
+
+The script **requires** the `S4U_BASE_URL` environment variable to be set. This specifies the base URL of the service you want to connect to.
+
+**Set the base URL (required):**
+
+**Linux/macOS:**
+```bash
+export S4U_BASE_URL="https://your-service-url.com"
+python unlock_ip.py 192.168.1.1 --login
+```
+
+**Windows (Command Prompt):**
+```cmd
+set S4U_BASE_URL=https://your-service-url.com
+python unlock_ip.py 192.168.1.1 --login
+```
+
+**Windows (PowerShell):**
+```powershell
+$env:S4U_BASE_URL="https://your-service-url.com"
+python unlock_ip.py 192.168.1.1 --login
+```
+
+**Using a `.env` file (recommended):**
+
+The script automatically loads `.env` files if `python-dotenv` is installed (included in requirements.txt).
+
+Copy the example file and edit it with your values:
+```bash
+cp .env.example .env
+# Then edit .env with your actual service URL
+```
+
+The `.env` file should contain:
+```
+S4U_BASE_URL=https://your-service-url.com
+```
+
+Then simply run the script - it will automatically load the `.env` file:
+```bash
+python unlock_ip.py 192.168.1.1 --login
+```
+
+**Alternative (without python-dotenv):** If you prefer not to use `python-dotenv`, you can manually load the `.env` file:
+```bash
+export $(cat .env | xargs)
+python unlock_ip.py 192.168.1.1 --login
+```
+
+**Note:** The `.env` file is gitignored and won't be committed to version control.
 
 ## Usage
 
@@ -63,10 +117,10 @@ python unlock_ip.py 192.168.1.1 --cookie ".AspNet.ApplicationCookie=YOUR_SESSION
 
 ### Getting Your Session Cookie (if needed)
 
-1. Open your browser and log into Seasons4U
+1. Open your browser and log into webpage
 2. Open DevTools (F12 or Cmd+Option+I)
 3. Go to **Application** tab (Chrome) or **Storage** tab (Firefox)
-4. Click on **Cookies** > `https://seasons4u.com`
+4. Click on **Cookies** > `[your base URL]` (or the URL set in `S4U_BASE_URL` environment variable)
 5. Find the cookie named `.AspNet.ApplicationCookie`
 6. Copy its entire value
 
@@ -88,7 +142,7 @@ python unlock_ip.py 192.168.1.1 --cookie ".AspNet.ApplicationCookie=YOUR_SESSION
 ## Error Handling
 
 If you get authentication errors:
-- Make sure you're logged into Seasons4U in your browser
+- Make sure you're logged into s4u in your browser
 - Copy the full session cookie value (it's very long)
 - The cookie expires, so you may need to get a fresh one
 
@@ -110,4 +164,4 @@ See [CHANGELOG.md](CHANGELOG.md) for a list of changes and version history.
 
 ## Disclaimer
 
-This tool is not officially affiliated with Seasons4U. Use at your own risk.
+This tool is not officially affiliated with s4u. Use at your own risk.

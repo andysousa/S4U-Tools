@@ -1,18 +1,36 @@
 #!/usr/bin/env python3
 """
-Automate IP unlocking for Seasons4U
+Automate IP unlocking for s4u
 """
 
 import sys
+import os
 import requests
 from bs4 import BeautifulSoup
-from urllib.parse import urljoin
+from urllib.parse import urljoin, urlparse
 import getpass
 
-# Configuration
-BASE_URL = 'https://seasons4u.com'
+# Try to load .env file if python-dotenv is available
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    # python-dotenv not installed, skip .env loading
+    pass
+
+# Configuration - Base URL from environment variable (required)
+BASE_URL = os.environ.get('S4U_BASE_URL')
+if not BASE_URL:
+    print('❌ Error: S4U_BASE_URL environment variable is required')
+    print('   Please set it before running the script:')
+    print('   export S4U_BASE_URL="https://your-service-url.com"')
+    sys.exit(1)
+
 LOGIN_URL = f'{BASE_URL}/Account/Login'
 EDIT_URL = f'{BASE_URL}/UnlockIp/Edit/558'
+
+# Extract domain from BASE_URL for cookie setting
+BASE_DOMAIN = urlparse(BASE_URL).netloc
 
 # Create a session to maintain cookies
 session = requests.Session()
@@ -209,7 +227,7 @@ def unlock_ip(new_ip_address, session_cookie=None):
             # Parse cookie string
             if '=' in session_cookie:
                 cookie_name, cookie_value = session_cookie.split('=', 1)
-                session.cookies.set(cookie_name, cookie_value, domain='seasons4u.com')
+                session.cookies.set(cookie_name, cookie_value, domain=BASE_DOMAIN)
             else:
                 print('⚠️  Warning: Session cookie format may be incorrect')
         
