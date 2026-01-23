@@ -15,4 +15,4 @@ Please note that this project has a [Code of Conduct](CODE_OF_CONDUCT.md) that a
 
 ## Disclaimer
 
-This tool is not officially affiliated with Seasons4U. Use at your own risk.
+This tool is not officially affiliated with s4u. Use at your own risk.
